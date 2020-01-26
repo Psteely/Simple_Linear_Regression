@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class MainClass extends PApplet {
     public static PApplet processing;
 
-//
+    //
     public static void main(String[] args) {
         PApplet.main("MainClass", args);
     }
@@ -22,16 +22,17 @@ public class MainClass extends PApplet {
     }
 
     public void draw() {
-        background(255) ;
+        background(255);
         MainClass.processing.textSize(20);
-        MainClass.processing.text("M = " + m,width/2f,20);
-        MainClass.processing.text("b = " + b,width/2f,50);
-    for (Point p : Points) {
+        MainClass.processing.text("M = " + m, width / 2f, 20);
+        MainClass.processing.text("b = " + b, width / 2f, 50);
+        for (Point p : Points) {
             p.display();
         }
         drawLine();
         if (Points.size() > 1) {
-            linearRegression();
+            //linearRegression();
+            gradientDescent();
 
         }
 
@@ -56,7 +57,7 @@ public class MainClass extends PApplet {
         float dy2 = map(y2, 0, 1, MainClass.processing.height, 0);
         MainClass.processing.stroke(255, 0, 255);
         MainClass.processing.line(dx1, dy1, dx2, dy2);
-       // MainClass.processing.println(dx1,dy1,dx2,dy2);
+        // MainClass.processing.println(dx1,dy1,dx2,dy2);
 
     }
 
@@ -81,8 +82,8 @@ public class MainClass extends PApplet {
         float denominator = 0;
 
         for (int i = 0; i < Points.size(); i++) {
-             x = Points.get(i).x;
-             y = Points.get(i).y;
+            x = Points.get(i).x;
+            y = Points.get(i).y;
             numerator += (x - aveX) * (y - aveY);
             denominator += (x - aveX) * (x - aveX);
         }
@@ -91,8 +92,19 @@ public class MainClass extends PApplet {
         b = aveY - (m * aveX);
 
 
+    }
 
+    public void gradientDescent() {
+        float learningRate = 0.5f;
+        for (int i = 0; i < Points.size(); i++) {
+            float x = Points.get(i).x;
+            float y = Points.get(i).y;
 
+            float guess = m * x + b;
+            float error = y - guess;
+            m = m + (error * x) * learningRate;
+            b = b + (error) * learningRate;
+        }
     }
 
 
