@@ -1,7 +1,5 @@
 import processing.core.PApplet;
-import processing.core.PVector;
 
-import javax.management.remote.JMXConnectorProvider;
 import java.util.ArrayList;
 
 public class MainClass extends PApplet {
@@ -26,8 +24,8 @@ public class MainClass extends PApplet {
     public void draw() {
         background(255) ;
         MainClass.processing.textSize(20);
-        MainClass.processing.text("M = " + m,width/2,20);
-        MainClass.processing.text("b = " + b,width/2,50);
+        MainClass.processing.text("M = " + m,width/2f,20);
+        MainClass.processing.text("b = " + b,width/2f,50);
     for (Point p : Points) {
             p.display();
         }
@@ -63,11 +61,15 @@ public class MainClass extends PApplet {
     }
 
     public void linearRegression() {
+
+        // m = Sum of (x - aveX) (y - aveY) / Sum of (x - aveX) (x - aveX)
+        // b = aveY - m * aveX
+
         // Calculate averages
         float sumX = 0;
         float sumY = 0;
-        float x = 0;
-        float y = 0;
+        float x;
+        float y;
         for (int i = 0; i < Points.size(); i++) {
             sumX += Points.get(i).x;
             sumY += Points.get(i).y;
