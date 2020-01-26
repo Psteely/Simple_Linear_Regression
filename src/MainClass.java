@@ -10,8 +10,8 @@ public class MainClass extends PApplet {
         PApplet.main("MainClass", args);
     }
 
-    float m = 1;
-    float b = 0;
+    float m = random(1f);
+    float b = random(1f);
     ArrayList<Point> Points;
 
     public void setup() {
@@ -95,13 +95,13 @@ public class MainClass extends PApplet {
     }
 
     public void gradientDescent() {
-        float learningRate = 0.5f;
+        float learningRate = 0.51f;
         for (int i = 0; i < Points.size(); i++) {
             float x = Points.get(i).x;
             float y = Points.get(i).y;
 
             float guess = m * x + b;
-            float error = y - guess;
+            float error =  y- guess ;
             m = m + (error * x) * learningRate;
             b = b + (error) * learningRate;
         }
